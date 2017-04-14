@@ -20,3 +20,30 @@ from math import *
 print(acos(1))
 #maar pas op want dan kan het dat ge functies importeert met dezelfde naam als uw functies!!
 #Als ge dan al die functies overschrijft worden die van u overschreven!
+
+
+#code to make it run serial or parallel
+ from joblib import Parallel, delayed
+
+import multiprocessing
+import time
+
+def myfunction(i):
+    print(i)
+    time.sleep(2)
+    return(i)
+
+if __name__ == '__main__':
+    start = time.time()
+    for i in range(10):
+        myfunction(i)
+    print("SERIAL", time.time() - start)
+
+     #parallel timing
+
+    num_cores = multiprocessing.cpu_count()
+    print("Number of cores used: "+ str(num_cores))
+    start = time.time()
+    results = Parallel(n_jobs=num_cores)(delayed(myfunction)(i) for i in range(10))
+    print("PARALLEL ", time.time() - start)
+    print(results)
